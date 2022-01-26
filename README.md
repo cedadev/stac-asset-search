@@ -1,1 +1,0 @@
-# stac-asset-search
