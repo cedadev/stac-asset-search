@@ -1,0 +1,177 @@
+openapi: 3.0.3
+info:
+  title: The SpatioTemporal Asset Catalog API - Asset Search
+  description: >-
+    This is an OpenAPI definition of the SpatioTemporal Asset Catalog API - Asset Search
+    specification.
+  version: 0.1.0
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /assets/search:
+    get:
+      summary: searches assets
+      operationId: assetsSearchGET
+      description: Retrieve Assets matching filters.
+      tags:
+        - Asset Search
+      parameters:
+        - $ref: '#/components/parameters/itemIds'
+        - $ref: 'https://api.stacspec.org/v1.0.0-beta.5/item-search/openapi.yaml#/components/parameters/limit'
+        - $ref: >-
+            https://api.stacspec.org/v1.0.0-beta.5/item-search/openapi.yaml#/components/parameters/datetime
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/geo+json:
+              schema:
+                $ref: '#/components/schemas/assetCollection'
+            text/html:
+              schema:
+                type: string
+        default:
+          $ref: >-
+            https://raw.githubusercontent.com/radiantearth/stac-api-spec/master/core/commons.yaml#/components/responses/Error
+    post:
+      summary: searches assets
+      operationId: assetsSearchPOST
+      description: Allows for search on assets
+      tags:
+        - Asset Search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: >-
+                    https://api.stacspec.org/v1.0.0-beta.5/item-search#/components/schemas/searchBody
+                - $ref: >-
+                    https://api.stacspec.org/v1.0.0-beta.5/fragments/fields/openapi.yaml#/components/schemas/searchBody
+                - $ref: >-
+                    https://api.stacspec.org/v1.0.0-beta.5/fragments/filter/openapi.yaml#/components/schemas/searchBody
+                - $ref: >-
+                    https://api.stacspec.org/v1.0.0-beta.5/fragments/sort/openapi.yaml#/components/schemas/searchBody
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/geo+json:
+              schema:
+                $ref: '#/components/schemas/assetCollection'
+            text/html:
+              schema:
+                type: string
+        default:
+          $ref: >-
+            https://api.stacspec.org/v1.0.0-beta.5/core/openapi.yaml#/components/responses/Error
+components:
+  schemas:
+    assetCollection:
+      description: >-
+        A GeoJSON FeatureCollection augmented with foreign members that contain values relevant to a STAC asset
+      type: object
+      required:
+        - features
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - FeatureCollection
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/asset'
+        links:
+          type: array
+          description: >-
+            An array of links. Can be used for pagination, e.g. by providing a link
+            with the `next` relation type.
+          items:
+            $ref: >-
+              https://api.stacspec.org/v1.0.0-beta.5/core/openapi.yaml#/components/schemas/link
+          example:
+            - rel: next
+              href: >-
+                http://api.cool-sat.com/search?next=ANsXtp9mrqN0yrKWhf-y2PUpHRLQb1GT-mtxNcXou8TwkXhi1Jbk
+    asset:
+      description: >-
+        A GeoJSON Feature augmented with foreign members that contain values relevant to a STAC asset
+      type: object
+      required:
+        - stac_version
+        - id
+        - type
+        - geometry
+        - bbox
+        - links
+        - properties
+      properties:
+        stac_version:
+          $ref: 'https://api.stacspec.org/v1.0.0-beta.5/core/openapi.yaml#/components/schemas/stac_version'
+        stac_extensions:
+          $ref: >-
+            https://api.stacspec.org/v1.0.0-beta.5/core/openapi.yaml#/components/schemas/stac_extensions
+        id:
+          type: string
+        links:
+          $ref: >-
+            https://api.stacspec.org/v1.0.0-beta.5/core/openapi.yaml#/components/schemas/links
+      example:
+        stac_version: 1.0.0
+        stac_extensions:
+          - 'https://stac-extensions.github.io/eo/v1.0.0/schema.json'
+          - 'https://stac-extensions.github.io/view/v1.0.0/schema.json'
+          - 'https://example.com/cs-extension/1.0/schema.json'
+        type: Feature
+        id: CS3-20160503_132131_05
+        properties:
+          datetime: '2016-05-03T13:22:30.040Z'
+          title: A CS3 item
+          license: PDDL-1.0
+          providers:
+            - name: CoolSat
+              roles:
+                - producer
+                - licensor
+              url: 'https://cool-sat.com/'
+          'view:sun_azimuth': 168.7
+          'eo:cloud_cover': 0.12
+          'view:off_nadir': 1.4
+          'platform': coolsat2
+          'instruments':
+            - cool_sensor_v1
+          'eo:bands': []
+          'view:sun_elevation': 33.4
+          'eo:gsd': 0.512
+        collection: CS3
+        links:
+          - rel: self
+            href: 'http://cool-sat.com/collections/CS3/items/20160503_132130_04'
+          - rel: root
+            href: 'http://cool-sat.com/collections'
+          - rel: parent
+            href: 'http://cool-sat.com/collections/CS3'
+          - rel: collection
+            href: 'http://cool-sat.com/collections/CS3'
+    itemIds:
+      type: array
+      description: |-
+        Array of Item ids to return.
+      items:
+        type: string
+  parameters:
+    itemIds:
+      name: itemIds
+      in: query
+      description: |-
+        Array of Item ids to return.
+      required: false
+      schema:
+        $ref: '#/components/schemas/itemIds'
+      explode: false
+
+servers:
+  - url: https://virtserver.swaggerhub.com/rhysrevans3/asset-search/1.0.0
