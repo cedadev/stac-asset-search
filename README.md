@@ -22,7 +22,6 @@
 - **OpenAPI specification:** [openapi.yaml](openapi.yaml)
 - **Conformance Class:** https://api.stacspec.org/v1.0.0-beta.2/asset-search#asset-search
 - **[Maturity Classification](https://github.com/radiantearth/stac-api-spec/blob/master/extensions.md#extension-maturity):** Pilot
-- **Examples**: [examples.md](examples.md)
 
 A search endpoint provides the ability to query STAC Asset objects across collections.
 It retrieves a group of Asset objects that match the provided parameters, wrapped in an  AssetCollection (which is a 
@@ -78,8 +77,6 @@ GET /asset/search?items=81420fb98d5c2bdd5814c5879543b300,fdfvcvfvf98d5c2bdafvfv9
 }
 ```
 
-For more examples see [examples.md](examples.md).
-
 ### Query Parameter Table
 
 The core parameters for STAC asset search are defined by OAFeat, and STAC adds a few parameters for convenience.
@@ -92,8 +89,6 @@ The core parameters for STAC asset search are defined by OAFeat, and STAC adds a
 | intersects  | GeoJSON Geometry | STAC       | Searches items by performing intersection between their geometry and provided GeoJSON geometry.  All GeoJSON geometry types must be supported.                                  |
 | ids         | \[string]        | STAC       | Array of Asset ids to return.                                                                                                                                                    |
 | items       | \[string]        | STAC       | Array of one or more Item ids that each matching Asset must be in.                                                                                                         |
-
-See [examples](examples.md) for some example requests.
 
 **limit** The limit parameter follows the same semantics of the OAFeat Item resource limit parameter. The value is 
 a suggestion to the server as to the maximum number of Item objects the
@@ -186,8 +181,6 @@ To avoid returning the entire original request body in a POST response which may
 property can be specified. This indicates that the client must send the same post body that it sent in the original 
 request, but with the specified headers/body values merged in. This allows servers to indicate what needs to change 
 to get to the next page without mirroring the entire query structure back to the client.
-
-See the [paging examples](examples.md#paging-examples) for additional insight.
 
 ## HTTP Request Methods and Content Types
 
