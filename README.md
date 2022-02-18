@@ -22,7 +22,6 @@
 - **OpenAPI specification:** [openapi.yaml](openapi.yaml)
 - **Conformance Class:** https://api.stacspec.org/v1.0.0-beta.2/asset-search#asset-search
 - **[Maturity Classification](https://github.com/radiantearth/stac-api-spec/blob/master/extensions.md#extension-maturity):** Pilot
-- **Dependencies**: [STAC API - Core](../core)
 - **Examples**: [examples.md](examples.md)
 
 A search endpoint provides the ability to query STAC Asset objects across collections.
@@ -34,7 +33,7 @@ a few additions specified in this document.
 The Asset Search endpoint follows Item Search intentionally defining only a limited group of operations. It is expected that 
 most behavior will be defined in [Extensions](#extensions). See [Item Search](https://github.com/radiantearth/stac-api-spec/blob/master/item-search/README.md) 
 
-Implementing `GET /search` is **required**, `POST /search` is optional, but recommended.
+Implementing `GET /asset/search` is **required**, `POST /asset/search` is optional, but recommended.
 
 ## Link Relations
 
