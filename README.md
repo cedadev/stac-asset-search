@@ -1,6 +1,6 @@
 # STAC API - Asset Search
 
-- [STAC API - Asset Search](#stac-api---item-search)
+- [STAC API - Asset Search](#stac-api---asset-search)
   - [Link Relations](#link-relations)
   - [Endpoints](#endpoints)
   - [Query Parameters and Fields](#query-parameters-and-fields)
@@ -36,7 +36,7 @@ Implementing `GET /asset/search` is **required**, `POST /asset/search` is option
 
 ## Link Relations
 
-This conformance class also requires implementation of the link relations in the [STAC API - Asset Search](../core) conformance class.
+This conformance class also requires implementation of the link relations in the [STAC API - Asset Search](https://github.com/radiantearth/stac-api-spec/blob/master/core/README.md) conformance class.
 
 The following Link relations shall exist in the Landing Page (root).
 
@@ -48,8 +48,6 @@ The `asset search` link relation shall have a `type` of `application/geo+json` a
 a link with a `method` of `POST` if the server supports it.
 
 ## Endpoints
-
-This conformance class also requires for the endpoints in the [STAC API - Core](../core) conformance class to be implemented.
 
 | Endpoint        | Returns          | Description           |
 | --------------- | ---------------- | --------------------- |
@@ -119,7 +117,7 @@ elevation 0.
 ## Response
 
 The response to a request (GET or POST) to the search endpoint must always be an 
-[AssetCollection]() object - a valid [GeoJSON 
+[AssetCollection](https://github.com/cedadev/stac-asset-spec/README.md) object - a valid [GeoJSON 
 FeatureCollection](https://tools.ietf.org/html/rfc7946#section-3.3) that consists entirely of STAC 
 [Asset]() objects. 
 
@@ -137,11 +135,11 @@ parameter name is defined by the implementor and is not necessarily part of the 
     "links": [
         {
             "rel": "next",
-            "href": "http://api.cool-sat.com/search?page=3"
+            "href": "http://api.cool-sat.com/asset/search?page=3"
         },
         {
             "rel": "prev",
-            "href": "http://api.cool-sat.com/search?page=1"
+            "href": "http://api.cool-sat.com/asset/search?page=1"
         }
     ]
 }
@@ -149,9 +147,9 @@ parameter name is defined by the implementor and is not necessarily part of the 
 
 The href may contain any arbitrary URL parameter:
 
-- `http://api.cool-sat.com/search?page=2`
-- `http://api.cool-sat.com/search?next=8a35eba9c`
-- `http://api.cool-sat.com/search?token=f32890a0bdb09ac3`
+- `http://api.cool-sat.com/asset/search?page=2`
+- `http://api.cool-sat.com/asset/search?next=8a35eba9c`
+- `http://api.cool-sat.com/asset/search?token=f32890a0bdb09ac3`
 
 Implementations may also add link relations `prev`, `first`, and `last`, though these are not required and may
 be infeasible to implement in some data stores.
